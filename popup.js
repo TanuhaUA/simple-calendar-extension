@@ -2,7 +2,8 @@ const calendarContainer = document.getElementById("calendar");
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-let currentDate = new Date();
+const today = new Date();
+let currentDate = new Date(today);
 
 function renderCalendar(date) {
   calendarContainer.innerHTML = "";
@@ -35,12 +36,21 @@ function renderCalendar(date) {
     renderCalendar(currentDate);
   };
 
+  const goToday = document.createElement("button");
+  goToday.textContent = "Today";
+  goToday.className = "go-today";
+  goToday.onclick = () => {
+    currentDate = new Date(today);
+    renderCalendar(currentDate);
+  };
+
   const title = document.createElement("div");
   title.textContent = `${monthName} ${year}`;
   title.className = "calendar-title";
 
-  header.appendChild(prevBtn);
   header.appendChild(title);
+  header.appendChild(prevBtn);
+  header.appendChild(goToday);
   header.appendChild(nextBtn);
 
   calendarContainer.appendChild(header);

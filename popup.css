@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: system-ui, sans-serif;
   margin: 10px;
@@ -13,13 +17,17 @@ body {
 }
 
 .calendar-title {
-  font-weight: 600;
+  flex-grow: 1;
+  text-align: left;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .nav-btn {
+  align-self: baseline;
+  font-size: 16px;
   background: none;
   border: none;
-  font-size: 16px;
   cursor: pointer;
 }
 
@@ -30,6 +38,10 @@ body {
   gap: 4px;
 }
 
+.days-row {
+  margin-bottom: 4px;
+}
+
 .day-name {
   font-weight: bold;
   font-size: 12px;
@@ -37,14 +49,18 @@ body {
 
 .day-cell,
 .empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
   padding: 4px;
-  height: 28px;
   line-height: 20px;
   border-radius: 6px;
 }
 
 .day-cell {
   cursor: default;
+  background-color: #f4f4f4;
 }
 
 .weekend {
@@ -52,7 +68,15 @@ body {
 }
 
 .today {
-  background-color: #e0f0ff;
   font-weight: bold;
+  background-color: #e0f0ff;
   border: 1px solid #bcdfff;
+}
+
+.go-today {
+  align-self: baseline;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
