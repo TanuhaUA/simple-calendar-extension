@@ -9,6 +9,16 @@ body {
   text-align: center;
 }
 
+body.light {
+  background: #fff;
+  color: #000;
+}
+
+body.dark {
+  background: #1e1e1e;
+  color: #eaeaea;
+}
+
 .calendar-header {
   display: flex;
   justify-content: space-between;
@@ -29,6 +39,7 @@ body {
   background: none;
   border: none;
   cursor: pointer;
+  color: inherit;
 }
 
 .days-row,
@@ -64,13 +75,22 @@ body {
 }
 
 .weekend {
-  background-color: #f9ecec;
+  background-color: rgba(249, 236, 236, 0.5);
+}
+
+body.dark .weekend {
+  background-color: rgba(90, 50, 50, 0.4);
 }
 
 .today {
   font-weight: bold;
   background-color: #e0f0ff;
   border: 1px solid #bcdfff;
+}
+
+body.dark .today {
+  background-color: #3b4f66;
+  border-color: #5f7da0;
 }
 
 .go-today {

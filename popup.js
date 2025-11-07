@@ -5,8 +5,17 @@ const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const today = new Date();
 let currentDate = new Date(today);
 
-function renderCalendar(date) {
+function renderCalendar(date, settings) {
   calendarContainer.innerHTML = "";
+
+  const startMonday = settings.weekStart === "monday";
+  const theme = settings.theme || "light";
+
+  document.body.className = theme;
+
+  const daysOfWeek = startMonday
+    ? ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const year = date.getFullYear();
   const month = date.getMonth();
@@ -25,7 +34,7 @@ function renderCalendar(date) {
   prevBtn.className = "nav-btn";
   prevBtn.onclick = () => {
     currentDate = new Date(year, month - 1, 1);
-    renderCalendar(currentDate);
+    renderCalendar(currentDate, settings);
   };
 
   const nextBtn = document.createElement("button");
@@ -33,7 +42,7 @@ function renderCalendar(date) {
   nextBtn.className = "nav-btn";
   nextBtn.onclick = () => {
     currentDate = new Date(year, month + 1, 1);
-    renderCalendar(currentDate);
+    renderCalendar(currentDate, settings);
   };
 
   const goToday = document.createElement("button");
@@ -55,7 +64,7 @@ function renderCalendar(date) {
 
   calendarContainer.appendChild(header);
 
-  // Days of week row
+  // Days of week
   const daysRow = document.createElement("div");
   daysRow.className = "days-row";
   daysOfWeek.forEach((d) => {
@@ -70,32 +79,33 @@ function renderCalendar(date) {
   const grid = document.createElement("div");
   grid.className = "calendar-grid";
 
-  // Compute starting offset (Monday-based)
-  const firstDayIndex = (firstDayOfMonth.getDay() + 6) % 7; // 0 = Monday
+  // Compute offset
+  const firstDayIndex = startMonday
+    ? (firstDayOfMonth.getDay() + 6) % 7
+    : firstDayOfMonth.getDay();
+
   const daysInMonth = lastDayOfMonth.getDate();
 
-  // Fill empty cells before the first day
+  // Empty slots
   for (let i = 0; i < firstDayIndex; i++) {
     const empty = document.createElement("div");
     empty.className = "empty";
     grid.appendChild(empty);
   }
 
-  // Fill actual days
+  // Days
   for (let day = 1; day <= daysInMonth; day++) {
     const cell = document.createElement("div");
     cell.textContent = day;
     cell.className = "day-cell";
 
-    // Get weekday index (0 = Monday, 6 = Sunday)
-    const weekday = (new Date(year, month, day).getDay() + 6) % 7;
+    const dayOfWeek = new Date(year, month, day).getDay();
+    const isWeekend = startMonday
+      ? dayOfWeek === 0 || dayOfWeek === 6
+      : dayOfWeek === 0 || dayOfWeek === 6;
 
-    // Highlight weekends
-    if (weekday === 5 || weekday === 6) {
-      cell.classList.add("weekend");
-    }
+    if (isWeekend) cell.classList.add("weekend");
 
-    // Highlight today
     const today = new Date();
     if (
       day === today.getDate() &&
@@ -111,4 +121,6 @@ function renderCalendar(date) {
   calendarContainer.appendChild(grid);
 }
 
-renderCalendar(currentDate);
+chrome.storage.sync.get(["weekStart", "theme"], (settings) => {
+  renderCalendar(currentDate, settings);
+});

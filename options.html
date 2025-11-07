@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calendar Settings</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    select {
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+<h2>Calendar Settings</h2>
+
+<label>
+  Start of the week:
+  <select id="weekStart">
+    <option value="monday">Monday</option>
+    <option value="sunday">Sunday</option>
+  </select>
+</label>
+
+<label>
+  Theme:
+  <select id="theme">
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+  </select>
+</label>
+
+<p id="status" style="color: green; margin-top: 10px;"></p>
+
+<script src="options.js"></script>
+</body>
+</html>
