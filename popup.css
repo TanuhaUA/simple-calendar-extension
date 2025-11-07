@@ -80,3 +80,7 @@ body {
   border: none;
   cursor: pointer;
 }
+
+.go-today:hover {
+  text-decoration: none;
+}
